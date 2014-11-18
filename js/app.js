@@ -1,10 +1,12 @@
 //click on thumbnail image
+//$(document).ready(function(){
 $('li img').on('click',function(){
     var src = $(this).attr('src');
     var img = '<img src="' + src + '" class="img-responsive"/>';
     // index method traverses from thumbnail to parent li item and stores its index
     // first array index is 0
-    var index = $(this).parent('li').index();                   
+    var index = $(this).parent('li').index();
+
     var html = '';
     html += img;                
     html += '<div style="height:25px;clear:both;display:block;">';
@@ -14,12 +16,15 @@ $('li img').on('click',function(){
 
     $('#myModal').modal();
     $('#myModal').on('shown.bs.modal', function(){
-        $('#myModal .modal-body').html(img);
-    });
+    //hide or show the right links when first or last image is clicked
+      $('#myModal .modal-body').html(html);
+      $('a.controls').trigger('click');
+    })
     $('#myModal').on('hidden.bs.modal', function(){
-        $('#myModal .modal-body').html('');
+      $('#myModal .modal-body').html('');
     });
-});
+  });
+//})
 
 //set up click handler for previous and next buttons
 $(document).on('click', 'a.controls', function(){
@@ -37,30 +42,23 @@ $(document).on('click', 'a.controls', function(){
     $(this).attr('href', newNextIndex);
     $('a.previous').attr('href', newPrevIndex);
   }
+
   // hide "next" link on last image and "prev" on first
   var total = $('ul.row li').length + 1;
-  // hide next  button
+  // hide next button
   if (total === newNextIndex) {
     $('a.next').hide();
   } else {
     $('a.next').show()
   }
-  // hide previoius button
+  // hide previous button
   if (newPrevIndex === 0) {
     $('a.previous').hide();
   } else {
     $('a.previous').show()
+  }
     return false;
-  }
-  }
-  }
-  $('#myModal').on('shown.bs.modal', function(){
-    $('#myModal .modal-body').html(html);
-    //hide or show the right links when first or last image is clicked
-    $('a.controls').trigger('click');
-    })}
 });
-
 
 
 
